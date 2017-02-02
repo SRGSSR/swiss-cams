@@ -6,7 +6,19 @@ angular.module('swisscams').directive('ngCesium', function(Cesium, camProvider, 
         },
         template: '<div id="cesiumContainer"></div>',
         link: function(scope) {
-            scope.cesium = new Cesium.Viewer('cesiumContainer');
+            scope.cesium = new Cesium.Viewer('cesiumContainer',{  'navigationHelpButton':false,
+                'timeline':false,
+                'animation':false,
+                'navigationInstructionsInitiallyVisible':false,
+                'selectionIndicator':false,
+                'infoBox':false,
+                'homeButton':false,
+                'sceneModePicker':false,
+                'baseLayerPicker':false,
+                'geocoder':false,
+                'vrButton':false,
+                'fullscreenButton':false
+            });
 
             var params = { region : 'Switzerland', bestshot : '0', randomize : '0', size : 'archiveprev', limit : 10};
             var camProviderPromise  = camProvider.search(params);
@@ -29,7 +41,5 @@ angular.module('swisscams').directive('ngCesium', function(Cesium, camProvider, 
                 });
             }
         },
-
-
     };
 });

@@ -22,6 +22,11 @@
       "grunt-contrib-uglify": "^2.0.0",
       "grunt-contrib-connect": "^1.0.2",
       "grunt-contrib-watch": "^1.0.0",
+      "grunt-contrib-copy": "^1.0.0",
+      "grunt-contrib-htmlmin": "^2.2.0",
+      "grunt-ng-annotate": "^3.0.0",
+      "grunt-dom-munger": "gruntjs-updater/grunt-dom-munger#peerDep",
+      "grunt-html2js": "^0.3.7",
       "load-grunt-tasks": "^3.5.2"
   }
 }
