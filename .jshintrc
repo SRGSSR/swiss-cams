@@ -10,5 +10,8 @@
     "boss": true,
     "eqnull": true,
     "browser": true,
-    "smarttabs": true
+    "smarttabs": true,
+    "globals": {
+        "angular": true
+    }
 }
