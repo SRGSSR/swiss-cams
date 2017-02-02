@@ -20,6 +20,7 @@ angular.module('swisscams').directive('ngCesium', function(Cesium, camProvider, 
                 'fullscreenButton':false
             });
 
+            camObject.setViewer(scope.cesium);
             scope.cesium.scene.globe.enableLighting = true;
 
             var cesiumTerrainProviderMeshes = new Cesium.CesiumTerrainProvider({
@@ -47,6 +48,27 @@ angular.module('swisscams').directive('ngCesium', function(Cesium, camProvider, 
                     }
                 });
             }
+
+
+            var handler = new Cesium.ScreenSpaceEventHandler(scope.cesium.scene.canvas);
+            handler.setInputAction(function(click) {
+                var pickedObject = scope.cesium.scene.pick(click.position);
+                if (Cesium.defined(pickedObject) && (pickedObject.id.action !== undefined)) {
+                    console.log("pickedObject call action");
+                    pickedObject.id.action();
+                }
+
+            }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+
+
+
         }
     };
 });
+
+
+
+
+
+
