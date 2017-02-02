@@ -9,14 +9,10 @@ angular.module('swisscams').factory('camObject', function($filter, Cesium) {
                 });
             return {
                 name : metadata.cam_name,
-                position: Cesium.Cartesian3.fromDegrees(metadata.longitude, metadata.latitude, Cesium.HeightReference.CLAMP_TO_GROUND),
-                cylinder : {
-                    length : 1000,
-                    topRadius : 1000.0,
-                    bottomRadius : 1000.0,
-                    material: material,
-                    outline : true,
-                    outlineColor : Cesium.Color.DARK_GREEN
+                position: Cesium.Cartesian3.fromDegrees(metadata.longitude, metadata.latitude, Cesium.HeightReference.CLAMP_TO_GROUND+1000),
+                ellipsoid : {
+                    radii : new Cesium.Cartesian3(1000, 1000, 1000),
+                    material : material
                 }
             };
         }
