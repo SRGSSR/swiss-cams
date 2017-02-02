@@ -100,16 +100,10 @@ module.exports = function (grunt) {
 
     html2js: {
       options: {
-        htmlmin: {
-    collapseBooleanAttributes: true,
-    collapseWhitespace: true,
-    removeAttributeQuotes: true,
-    removeComments: true,
-    removeEmptyAttributes: true,
-    removeRedundantAttributes: true,
-    removeScriptTypeAttributes: true,
-    removeStyleLinkTypeAttributes: true
-  },
+        htmlmin: '<%= htmlmin.main.options %>',
+        existingModule: true,
+        singleModule: true,
+        module: 'swisscams',
         base: ''
       },
       main: {
