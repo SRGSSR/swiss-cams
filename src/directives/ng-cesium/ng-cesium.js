@@ -20,8 +20,14 @@ angular.module('swisscams').directive('ngCesium', function(Cesium, camProvider, 
                 'fullscreenButton':false
             });
 
+            scope.cesium.scene.globe.enableLighting = true;
 
-
+            var cesiumTerrainProviderMeshes = new Cesium.CesiumTerrainProvider({
+                url : 'https://assets.agi.com/stk-terrain/world',
+                requestWaterMask : true,
+                requestVertexNormals : true
+            });
+            scope.cesium.terrainProvider = cesiumTerrainProviderMeshes;
 
             var params = { region : 'Switzerland', bestshot : '0', randomize : '0', size : 'quarter', limit : 10};
             var camProviderPromise  = camProvider.search(params);
