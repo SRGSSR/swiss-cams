@@ -38,9 +38,10 @@ module.exports = function (grunt) {
       },
       update: {
         options: {
-          remove: ['script[data-concat!="false"]'],
+          remove: ['script[data-concat!="false"]', 'script[data-remove="true"]'],
           append: [
-            {selector: 'head', html: '<script src="<%= pkg.name %>.min.js"></script>'}
+            {selector: 'head', html: '<script src="<%= pkg.name %>.min.js"></script>'},
+            {selector: 'head', html: '<link href="css/<%= pkg.name %>.min.css" type="text/css" rel="stylesheet/less">'}
           ]
         },
         src: 'index.html',
@@ -68,7 +69,10 @@ module.exports = function (grunt) {
 
     copy: {
       main: {
-        files: [{src: 'node_modules/cesium/Build/Cesium/**', dest: 'dist/', filter: 'isFile', expand: true}]
+        files: [
+          {src: 'node_modules/cesium/Build/Cesium/**', dest: 'dist/', filter: 'isFile', expand: true},
+          {src: 'fonts/**', dest: 'dist/', filter: 'isFile', expand: true}
+        ]
       }
     },
 
@@ -110,6 +114,26 @@ module.exports = function (grunt) {
         src: ['src/**/*.html'],
         dest: 'tmp/templates.js'
       }
+    },
+
+    less: {
+      files: [{
+        expand: true,
+        cwd: 'less/',
+        src: ['less/<%= pkg.name %>.less'],
+        dest: 'tmp/less/',
+        ext: '.css'
+      }]
+    },
+
+    cssmin: {
+      files: [{
+        expand: true,
+        cwd: 'tmp/',
+        src: ['css/**/*.css'],
+        dest: 'dist/css/',
+        ext: '.min.css'
+      }]
     },
 
     jshint: {

@@ -11,22 +11,21 @@
 
   <link rel="shortcut icon" href="img/swisscams.ico" type="image/x-icon">
 
+  <link href="less/swisscams.less" type="text/css" rel="stylesheet/less" data-remove="true">
+
+  <script src="node_modules/less/dist/less.min.js" data-concat="false" data-remove="true"></script>
+
   <script src="node_modules/cesium/Build/Cesium/Cesium.js" data-concat="false"></script>
+
   <script src="node_modules/angular/angular.js"></script>
   <script src="node_modules/angular-route/angular-route.js"></script>
 
   <script src="src/swisscams.js"></script>
   <script src="src/controllers/SwissCamsController/SwissCamsController.js"></script>
   <script src="src/directives/ng-cesium/ng-cesium.js"></script>
+  <script src="src/directives/photo-view/photo-view.js"></script>
   <script src="src/factories/cam-provider.js"></script>
   <script src="src/factories/cam-object.js"></script>
-
-  <style>
-    @import url(node_modules/cesium/Build/Cesium/Widgets/widgets.css);
-    html, body, #swisscams-layer, #cesiumContainer {
-      width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
-    }
-  </style>
 </head>
 <body ng-view>
 </body>

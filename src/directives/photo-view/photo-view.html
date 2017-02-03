@@ -1,0 +1,18 @@
+<div id="photo-layer" ng-style="{'background-image': 'url(' + img + ')'}">
+    <div class="geoloc-panel">
+        <span class="bold">{{ location }}</span><br />
+        <span>Altitude: {{ altitude }}m</span><br />
+        <span>Latitude: {{ latitude }}</span><br />
+        <span>Longitude: {{ longitude }}</span>
+    </div>
+    <div class="close-panel" ng-click="close()">
+        <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+    </dive>
+    <div class="footer-panel">
+        <h1>Méteo</h1>
+        <i class="fa fa-sun-o" aria-hidden="true"></i>
+        <span class="temperature">12º</span>
+        <i class="fa fa-moon-o" aria-hidden="true"></i>
+        <span class="temperature">0º</span>
+    </div>
+</div>
