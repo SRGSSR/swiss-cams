@@ -1,9 +1,11 @@
-angular.module('swisscams').controller('SwissCamsController', function($scope) {
-    $scope.map = false;
-    $scope.showMap = function() {
-        $scope.map = true;
+angular.module('swisscams').controller('SwissCamsController', function(camObject, $scope, $rootScope) {
+
+	$scope.getImageURl = function(){
+        var tempURL = camObject.getCurrentImageURl();
+        return tempURL;
     };
-    $scope.hideMap = function() {
-        $scope.map = false;
+
+    $scope.onClose = function() {
+        $rootScope.$broadcast("CLOSEUI");
     };
 });

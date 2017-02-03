@@ -1,4 +1,4 @@
-angular.module('swisscams').directive('ngCesium', function(Cesium, camProvider, camObject) {
+angular.module('swisscams').directive('ngCesium', function(Cesium, camProvider, camObject, $rootScope) {
     return {
         restrict: 'E',
         replace: true,
@@ -22,7 +22,7 @@ angular.module('swisscams').directive('ngCesium', function(Cesium, camProvider, 
 
             camObject.setViewer(scope.cesium);
             scope.cesium.scene.globe.enableLighting = true;
-
+            $rootScope.isUIVisible = false;
             var cesiumTerrainProviderMeshes = new Cesium.CesiumTerrainProvider({
                 url : 'https://assets.agi.com/stk-terrain/world',
                 requestWaterMask : true,
@@ -34,6 +34,16 @@ angular.module('swisscams').directive('ngCesium', function(Cesium, camProvider, 
             var camProviderPromise  = camProvider.search(params);
             var camMetadatas;
 
+            $rootScope.$on("OPENUI", function () {
+                console.log("OPENUI");
+                $rootScope.isUIVisible = true;
+                $rootScope.currentCamMetadatas = camObject.getCurrentCamMetaDatas();
+                scope.$apply();
+            });
+            $rootScope.$on("CLOSEUI", function () {
+                $rootScope.isUIVisible = false;
+            });
+
             if(camProviderPromise){
                 camProviderPromise.then(function success(response){
                     if(response.data){
@@ -44,11 +54,10 @@ angular.module('swisscams').directive('ngCesium', function(Cesium, camProvider, 
                             var camObj = camObject.getCamObject(camMetadata);
                             camOnMap = scope.cesium.entities.add(camObj);
                         });
-                        scope.cesium.zoomTo(camOnMap);
+                        scope.cesium.zoomTo(camOnMap, new Cesium.HeadingPitchRange(Cesium.Math.toRadians(90.0), Cesium.Math.toRadians(-15.0), 300000));
                     }
                 });
             }
-
 
             var handler = new Cesium.ScreenSpaceEventHandler(scope.cesium.scene.canvas);
             handler.setInputAction(function(click) {
@@ -59,9 +68,6 @@ angular.module('swisscams').directive('ngCesium', function(Cesium, camProvider, 
                 }
 
             }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
-
-
-
 
         }
     };

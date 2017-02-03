@@ -1,4 +1,4 @@
-angular.module('swisscams').directive('photoView', function() {
+angular.module('swisscams').directive('photoView', function(camObject) {
     return {
         restrict: 'E',
         replace: true,
