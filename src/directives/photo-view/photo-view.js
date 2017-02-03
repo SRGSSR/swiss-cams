@@ -1,4 +1,4 @@
-angular.module('swisscams').directive('photoView', function() {
+angular.module('swisscams').directive('photoView', function(camObject) {
     return {
         restrict: 'E',
         replace: true,
@@ -11,6 +11,8 @@ angular.module('swisscams').directive('photoView', function() {
         },
         templateUrl: 'src/directives/photo-view/photo-view.html',
         link: function(scope) {
+            console.log("photoView link");
+            
         }
     };
 });

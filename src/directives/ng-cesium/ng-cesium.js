@@ -1,4 +1,4 @@
-angular.module('swisscams').directive('ngCesium', function(Cesium, camProvider, camObject) {
+angular.module('swisscams').directive('ngCesium', function(Cesium, camProvider, camObject, $rootScope) {
     return {
         restrict: 'E',
         replace: true,
@@ -22,7 +22,7 @@ angular.module('swisscams').directive('ngCesium', function(Cesium, camProvider, 
 
             camObject.setViewer(scope.cesium);
             scope.cesium.scene.globe.enableLighting = true;
-
+            $rootScope.isUIVisible = false;
             var cesiumTerrainProviderMeshes = new Cesium.CesiumTerrainProvider({
                 url : 'https://assets.agi.com/stk-terrain/world',
                 requestWaterMask : true,
@@ -33,6 +33,15 @@ angular.module('swisscams').directive('ngCesium', function(Cesium, camProvider, 
             var params = { region : 'Switzerland', bestshot : '0', randomize : '0', size : 'quarter', limit : 10};
             var camProviderPromise  = camProvider.search(params);
             var camMetadatas;
+
+            $rootScope.$on("OPENUI", function () {
+                console.log("OPENUI");
+                $rootScope.isUIVisible = true;
+                scope.$apply();
+            })
+            $rootScope.$on("CLOSEUI", function () {
+                $rootScope.isUIVisible = false;
+            })
 
             if(camProviderPromise){
                 camProviderPromise.then(function success(response){
@@ -49,7 +58,6 @@ angular.module('swisscams').directive('ngCesium', function(Cesium, camProvider, 
                 });
             }
 
-
             var handler = new Cesium.ScreenSpaceEventHandler(scope.cesium.scene.canvas);
             handler.setInputAction(function(click) {
                 var pickedObject = scope.cesium.scene.pick(click.position);
@@ -59,9 +67,6 @@ angular.module('swisscams').directive('ngCesium', function(Cesium, camProvider, 
                 }
 
             }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
-
-
-
 
         }
     };
