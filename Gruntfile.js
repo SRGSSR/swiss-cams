@@ -71,7 +71,8 @@ module.exports = function (grunt) {
       main: {
         files: [
           {src: 'node_modules/cesium/Build/Cesium/**', dest: 'dist/', filter: 'isFile', expand: true},
-          {src: 'fonts/**', dest: 'dist/', filter: 'isFile', expand: true}
+          {src: 'fonts/**', dest: 'dist/', filter: 'isFile', expand: true},
+          {src: 'img/**', dest: 'dist/', filter: 'isFile', expand: true}
         ]
       }
     },

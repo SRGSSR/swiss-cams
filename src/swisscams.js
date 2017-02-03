@@ -10,5 +10,4 @@ angular.module('swisscams').config(function($routeProvider, $locationProvider) {
 
 angular.module('swisscams').run(function() {
     // Run application
-   
 });

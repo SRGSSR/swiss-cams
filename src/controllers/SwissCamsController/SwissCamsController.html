@@ -1,12 +1,17 @@
 <div id="swisscams-layer" ng-controller="SwissCamsController">
-    <ng-cesium ng-show="!isUIVisible"></ng-cesium>
+    <ng-cesium
+        ng-if="cams &amp;&amp; cams.length > 0"
+        ng-hide="hideMap"
+        cams="cams"
+        on-open="onOpenCam(cam)"></ng-cesium>
     <photo-view
-    	ng-if="isUIVisible"
-        on-close="onClose()"
-        latitude="{{ currentCamMetadatas.latitude }}"
-        longitude="{{ currentCamMetadatas.longitude }}"
-        altitude="{{ currentCamMetadatas.altitude }}"
-        location="{{ currentCamMetadatas.customer_name }}" 
-        img="{{getImageURl()}}">
+    	ng-if="cam"
+        on-close="onClosePhotoView()"
+        latitude="{{ cam.latitude }}"
+        longitude="{{ cam.longitude }}"
+        altitude="{{ cam.altitude }}"
+        location="{{ cam.name }}"
+        last-taken="{{ cam.lastTaken }}"
+        img="{{ cam.img }}">
     </photo-view>
 </div>

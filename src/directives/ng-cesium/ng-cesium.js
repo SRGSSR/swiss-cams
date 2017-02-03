@@ -1,12 +1,15 @@
-angular.module('swisscams').directive('ngCesium', function(Cesium, camProvider, camObject, $rootScope) {
+angular.module('swisscams').directive('ngCesium', function(Cesium, $timeout) {
     return {
         restrict: 'E',
         replace: true,
         scope: {
+            onOpen: '&',
+            cams: '='
         },
-        template: '<div id="cesiumContainer"></div>',
+        template: '<div id="map-viewer"></div>',
         link: function(scope) {
-            scope.cesium = new Cesium.Viewer('cesiumContainer', { 'navigationHelpButton':false,
+            var viewer = new Cesium.Viewer('map-viewer', {
+                'navigationHelpButton':false,
                 'timeline':false,
                 'animation':false,
                 'navigationInstructionsInitiallyVisible':false,
@@ -20,61 +23,68 @@ angular.module('swisscams').directive('ngCesium', function(Cesium, camProvider, 
                 'fullscreenButton':false
             });
 
-            camObject.setViewer(scope.cesium);
-            scope.cesium.scene.globe.enableLighting = true;
-            $rootScope.isUIVisible = false;
-            var cesiumTerrainProviderMeshes = new Cesium.CesiumTerrainProvider({
+            viewer.scene.globe.enableLighting = true;
+            viewer.terrainProvider = new Cesium.CesiumTerrainProvider({
                 url : 'https://assets.agi.com/stk-terrain/world',
                 requestWaterMask : true,
                 requestVertexNormals : true
             });
-            scope.cesium.terrainProvider = cesiumTerrainProviderMeshes;
 
-            var params = { region : 'Switzerland', bestshot : '0', randomize : '0', size : 'quarter', limit : 10};
-            var camProviderPromise  = camProvider.search(params);
-            var camMetadatas;
-
-            $rootScope.$on("OPENUI", function () {
-                console.log("OPENUI");
-                $rootScope.isUIVisible = true;
-                $rootScope.currentCamMetadatas = camObject.getCurrentCamMetaDatas();
-                scope.$apply();
-            });
-            $rootScope.$on("CLOSEUI", function () {
-                $rootScope.isUIVisible = false;
-            });
-
-            if(camProviderPromise){
-                camProviderPromise.then(function success(response){
-                    if(response.data){
-                        camMetadatas = response.data;
-                        var camOnMap, lastImage;
-                        angular.forEach(camMetadatas, function(camMetadata) {
-                            lastImage = camMetadata.image_url;
-                            var camObj = camObject.getCamObject(camMetadata);
-                            camOnMap = scope.cesium.entities.add(camObj);
-                        });
-                        scope.cesium.zoomTo(camOnMap, new Cesium.HeadingPitchRange(Cesium.Math.toRadians(90.0), Cesium.Math.toRadians(-15.0), 300000));
-                    }
-                });
-            }
-
-            var handler = new Cesium.ScreenSpaceEventHandler(scope.cesium.scene.canvas);
-            handler.setInputAction(function(click) {
-                var pickedObject = scope.cesium.scene.pick(click.position);
-                if (Cesium.defined(pickedObject) && (pickedObject.id.action !== undefined)) {
-                    console.log("pickedObject call action");
-                    pickedObject.id.action();
+            new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas).setInputAction(function(click) {
+                var pick = viewer.scene.pick(click.position);
+                if (Cesium.defined(pick) && (pick.id.action !== undefined)) {
+                    pick.id.action();
                 }
-
             }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
+            Cesium.when(
+                new Cesium.PinBuilder().fromUrl(
+                    Cesium.buildModuleUrl('//' + location.host + '/img/camera.png'), Cesium.Color.ORANGE, 48), function(canvas) {
+                var icon = canvas.toDataURL();
+
+                scope.cams.forEach(function(cam) {
+                    viewer.entities.add({
+                        name: cam.name,
+                        id: cam.id,
+                        position: Cesium.Cartesian3.fromDegrees(
+                                        cam.longitude,
+                                        cam.latitude,
+                                        Cesium.HeightReference.CLAMP_TO_GROUND),
+                        billboard: {
+                            image: icon,
+                            verticalOrigin: Cesium.VerticalOrigin.BOTTOM
+                        },
+
+                        action: function() {
+                            viewer.camera.flyTo({
+                                destination : Cesium.Cartesian3.fromDegrees(cam.longitude,
+                                                                            Number(cam.latitude)-0.1, 
+                                                                            Cesium.HeightReference.CLAMP_TO_GROUND + 10000),
+                                orientation : {
+                                    pitch : Cesium.Math.toRadians(-45.0),
+                                },
+                                duration: 1,
+                                complete : function() {
+                                    $timeout(function() {
+                                        scope.onOpen({cam: cam});
+                                    });
+                                }
+                            });
+                        }
+                    });
+                });
+
+                viewer.camera.flyTo({
+                    destination: Cesium.Cartesian3.fromDegrees("8.2275", "45.0", Cesium.HeightReference.CLAMP_TO_GROUND + 175000),
+                    orientation : {
+                        pitch : Cesium.Math.toRadians(-45.0),
+                    },
+                    duration: 2
+                });
+            });
         }
     };
 });
-
-
-
 
 
 

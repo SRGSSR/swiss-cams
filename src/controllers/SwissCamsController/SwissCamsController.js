@@ -1,11 +1,23 @@
-angular.module('swisscams').controller('SwissCamsController', function(camObject, $scope, $rootScope) {
+angular.module('swisscams').controller('SwissCamsController', function(camProvider, $scope) {
 
-	$scope.getImageURl = function(){
-        var tempURL = camObject.getCurrentImageURl();
-        return tempURL;
+    camProvider.search({
+        region : 'Switzerland',
+        bestshot : '0',
+        randomize : '0',
+        size : 'quarter',
+        limit : 13
+    }).then(function(data) {
+        $scope.cams = data;
+    });
+
+    $scope.onClosePhotoView = function() {
+        $scope.cam = undefined;
+        $scope.hideMap = false;
+    };
+    $scope.onOpenCam = function(cam) {
+        $scope.cam = cam;
+        $scope.hideMap = true;
     };
 
-    $scope.onClose = function() {
-        $rootScope.$broadcast("CLOSEUI");
-    };
+    $scope.hideMap = false;
 });
