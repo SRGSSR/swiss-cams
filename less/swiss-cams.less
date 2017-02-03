@@ -1,0 +1,107 @@
+@import url('../node_modules/cesium/Build/Cesium/Widgets/widgets.css');
+@import url('//fonts.googleapis.com/css?family=Open+Sans');
+@import (inline) 'font-awesome.min.css';
+
+html, body, #swisscams-layer, #cesiumContainer, #photo-layer {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#photo-layer {
+    background-size: cover;
+    .footer-panel {
+        display: table;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        height: 18%;
+        width: 100%;
+        margin: 0;
+        padding: 0 0 0 100px;
+        overflow: hidden;
+        background-color: rgba(0, 0, 0, 0.8);
+
+        .weather-panel {
+            display: table-cell;
+            width: 300px;
+
+            h1 {
+                color: #eaa206;
+                font-size: 16px;
+                font-family: 'Open Sans', sans-serif;
+                font-weight: bold;
+            }
+
+            .fa-sun-o, .fa-moon-o {
+                padding-right: 5px;
+                color: white;
+                font-size: 60px;
+            }
+
+            .temperature {
+                color: #eaa206;
+                font-size: 20px;
+                font-weight: none;
+                font-family: 'Open Sans', sans-serif;
+                padding-right: 20px;
+                vertical-align: top;
+            }
+        }
+
+        .time-picker {
+            display: table-cell;
+
+            font-size: 16px;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            vertical-align: middle;
+
+            .fa-chevron-right, .fa-chevron-left {
+                font-size: 30px;
+                vertical-align: middle;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            span {
+                vertical-align: middle;
+            }
+        }
+
+        .twitter-panel {
+          display:table-cell;
+          width: 600px;
+          background-color: pink;
+        }
+    }
+
+    .close-panel {
+        float: right;
+        padding: 20px;
+        font-size: 60px;
+        color: #eaa206;
+        cursor: pointer;
+    }
+
+    .geoloc-panel {
+        float: left;
+        margin: 20px;
+        padding: 10px;
+        color: white;
+        font-size: 12px;
+        background-color: rgba(0, 0, 0, 0.30);
+        border-radius: 12px;
+        font-weight: none;
+        font-family: 'Open Sans', sans-serif;
+
+        .bold {
+            font-weight: bold;
+            font-size: 14px;
+        }
+    }
+}

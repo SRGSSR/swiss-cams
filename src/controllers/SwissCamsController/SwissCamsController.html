@@ -1,10 +1,12 @@
 <div id="swisscams-layer" ng-controller="SwissCamsController">
-    <ng-cesium></ng-cesium>
-    <!--<photo-view
+    <ng-cesium ng-show="map"></ng-cesium>
+    <photo-view
+        ng-if="!map"
         latitude="47.303782"
         longitude="8.836782"
         altitude="500"
         location="Mosaik"
+        on-close="showMap()"
         img="//static.pexels.com/photos/6548/cold-snow-winter-mountain.jpeg">
-    </photo-view>-->
+    </photo-view>
 </div>

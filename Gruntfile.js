@@ -38,10 +38,10 @@ module.exports = function (grunt) {
       },
       update: {
         options: {
-          remove: ['script[data-concat!="false"]', 'script[data-remove="true"]'],
+          remove: ['script[data-concat!="false"]', 'script[data-remove="true"]', 'link[data-remove="true"]'],
           append: [
             {selector: 'head', html: '<script src="<%= pkg.name %>.min.js"></script>'},
-            {selector: 'head', html: '<link href="css/<%= pkg.name %>.min.css" type="text/css" rel="stylesheet/less">'}
+            {selector: 'head', html: '<link href="css/<%= pkg.name %>.min.css" type="text/css" rel="stylesheet">'}
           ]
         },
         src: 'index.html',
@@ -117,23 +117,30 @@ module.exports = function (grunt) {
     },
 
     less: {
-      files: [{
-        expand: true,
-        cwd: 'less/',
-        src: ['less/<%= pkg.name %>.less'],
-        dest: 'tmp/less/',
-        ext: '.css'
-      }]
+      main: {
+        files: [{
+          expand: true,
+          cwd: 'less/',
+          src: ['<%= pkg.name %>.less'],
+          dest: 'tmp/css/',
+          ext: '.css'
+        }]
+      }
     },
 
     cssmin: {
-      files: [{
-        expand: true,
-        cwd: 'tmp/',
-        src: ['css/**/*.css'],
-        dest: 'dist/css/',
-        ext: '.min.css'
-      }]
+      main: {
+        options: {
+          processImport: false
+        },
+        files: [{
+          expand: true,
+          cwd: 'tmp/',
+          src: ['css/**/*.css'],
+          dest: 'dist/',
+          ext: '.min.css'
+        }]
+      }
     },
 
     jshint: {
@@ -171,6 +178,8 @@ module.exports = function (grunt) {
     'concat',
     'ngAnnotate',
     'uglify',
+    'less',
+    'cssmin',
     'copy',
     'dom_munger:update',
     'htmlmin',
