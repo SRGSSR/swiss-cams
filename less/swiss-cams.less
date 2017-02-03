@@ -11,6 +11,8 @@ html, body, #swisscams-layer, #cesiumContainer, #photo-layer {
 }
 
 #photo-layer {
+    font-family: 'Open Sans', sans-serif;
+
     background-size: cover;
     .footer-panel {
         display: table;
@@ -20,7 +22,7 @@ html, body, #swisscams-layer, #cesiumContainer, #photo-layer {
         height: 18%;
         width: 100%;
         margin: 0;
-        padding: 0 0 0 100px;
+        padding: 5px 0 0 100px;
         overflow: hidden;
         background-color: rgba(0, 0, 0, 0.8);
 
@@ -31,21 +33,19 @@ html, body, #swisscams-layer, #cesiumContainer, #photo-layer {
             h1 {
                 color: #eaa206;
                 font-size: 16px;
-                font-family: 'Open Sans', sans-serif;
                 font-weight: bold;
             }
 
             .fa-sun-o, .fa-moon-o {
                 padding-right: 5px;
                 color: white;
-                font-size: 60px;
+                font-size: 55px;
             }
 
             .temperature {
                 color: #eaa206;
                 font-size: 20px;
                 font-weight: none;
-                font-family: 'Open Sans', sans-serif;
                 padding-right: 20px;
                 vertical-align: top;
             }
@@ -55,7 +55,6 @@ html, body, #swisscams-layer, #cesiumContainer, #photo-layer {
             display: table-cell;
 
             font-size: 16px;
-            font-family: 'Open Sans', sans-serif;
             font-weight: bold;
             color: white;
             text-align: center;
@@ -74,9 +73,45 @@ html, body, #swisscams-layer, #cesiumContainer, #photo-layer {
         }
 
         .twitter-panel {
-          display:table-cell;
-          width: 600px;
-          background-color: pink;
+            color: white;
+            display: table-cell;
+            width: 500px;
+
+            h1 {
+                color: #00a8ff;
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+            .tweet {
+                display: table;
+
+                .avatar {
+                    width: 45px;
+                    height: 45px;
+                    border-radius: 5px;
+                    display: table-cell;
+                    background-size: cover;
+                    margin-right: 10px;
+                }
+                .info {
+                    display: table-cell;
+                    font-size: 12px;
+                    padding-left: 15px;
+                    vertical-align: middle;
+                    .title {
+                        font-style: oblique;
+                        .user {
+                            color: #00a8ff;
+                        }
+                    }
+                }
+            }
+
+            .controls {
+                margin-top: 5px;
+                color: #00a8ff;
+            }
         }
     }
 
@@ -97,7 +132,6 @@ html, body, #swisscams-layer, #cesiumContainer, #photo-layer {
         background-color: rgba(0, 0, 0, 0.30);
         border-radius: 12px;
         font-weight: none;
-        font-family: 'Open Sans', sans-serif;
 
         .bold {
             font-weight: bold;
